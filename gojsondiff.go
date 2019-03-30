@@ -91,12 +91,7 @@ func (differ *Differ) compareMaps(
 
 	names := sortedKeys(left) // stabilize delta order
 	for _, name := range names {
-		if rightValue, ok := right[name]; ok {
-			same, delta := differ.compareValues(Name(name), left[name], rightValue)
-			if !same {
-				deltas = append(deltas, delta)
-			}
-		} else {
+		if _, ok := right[name]; !ok {
 			deltas = append(deltas, NewDeleted(Name(name), left[name]))
 		}
 	}
